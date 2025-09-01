@@ -7,25 +7,13 @@
 const MostVotes = ({ anecdotes = [], votes = [] }) => {
   //Validates
   if (!anecdotes.length || !votes.length) return null
-  //Create array from the votes
-  const order = Array.from({ length: votes.length }, (_, i) => i)
-
-  // Bubble sort descending by vote count
-  for (let i = 0; i < order.length - 1; i++) {
-    let swapped = false
-    for (let j = 0; j < order.length - 1 - i; j++) {
-      const a = order[j]
-      const b = order[j + 1]
-      if (votes[a] < votes[b]) {
-        order[j] = b
-        order[j + 1] = a
-        swapped = true
-      }
+  //Start at the beginning
+  let topIndex = 0
+  for (let i = 1; i < votes.length; i++) {
+    if (votes[i] > votes[topIndex]) {
+      topIndex = i
     }
-    if (!swapped) break
   }
-
-  const topIndex = order[0]
 
   return (
     <div>
